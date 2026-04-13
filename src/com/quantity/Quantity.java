@@ -11,13 +11,20 @@ public class Quantity {
         this.unit = unit;
     }
 
+    // Convert everything to base unit (inch)
+    double toBaseUnit() {
+        if (unit.equals("feet")) return value * 12;
+        if (unit.equals("inch")) return value;
+        return value;
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj) return true;
         if (obj == null || getClass() != obj.getClass()) return false;
+
         Quantity q = (Quantity) obj;
 
-        return Double.compare(q.value, value) == 0 &&
-                Objects.equals(unit, q.unit);
+        return Double.compare(this.toBaseUnit(), q.toBaseUnit()) == 0;
     }
 }
