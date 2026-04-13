@@ -4,18 +4,18 @@ import java.util.Objects;
 
 public class Quantity {
     double value;
-    String unit;
+    LengthUnit unit;
 
-    public Quantity(double value, String unit) {
+    public Quantity(double value, LengthUnit unit) {
+        if (unit == null) {
+            throw new IllegalArgumentException("Unit cannot be null");
+        }
         this.value = value;
         this.unit = unit;
     }
 
-    // Convert everything to base unit (inch)
     double toBaseUnit() {
-        if (unit.equals("feet")) return value * 12;
-        if (unit.equals("inch")) return value;
-        return value;
+        return unit.toBase(value);
     }
 
     @Override
